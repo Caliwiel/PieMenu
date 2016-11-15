@@ -25,11 +25,10 @@ public class PieMenuPanel extends javax.swing.JPanel {
         initComponents();
         x = getWidth()/2;
         y = getHeight()/2;
-        this.setBounds(10, 10, 400, 300);
-        this.setPreferredSize(new Dimension(400, 300));
+        this.setBounds(10, 10, 200, 200);
+        this.setPreferredSize(new Dimension(200, 200));
         repaint();
         System.out.println("Init panel");
-        //paint(getGraphics());
         this.setVisible(true);
     }
 
@@ -69,8 +68,30 @@ public class PieMenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_formMouseClicked
 
     
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        System.out.println("Paint component 1");
+       /* Graphics2D g2 = (Graphics2D) g;
+	g2.setColor(Color.yellow);
+	g2.fillArc((int)x-150, (int)y, 150, 150, 90, 90);
+	// Tracer un cercle
+	g2.setColor(Color.BLUE);
+	g2.fillArc((int)x-150, (int)y, 150, 150, 0, 90);	
+        g2.setColor(Color.GREEN);
+	g2.fillArc((int)x-150, (int)y, 150, 150, 180, 90);
+        g2.setColor(Color.yellow);
+	g2.fillArc((int)x-150, (int)y, 150, 150, 270, 90);
+        
+        g2.setColor(Color.white);
+        g2.fillOval((int)x-30, (int)y, 30, 30);*/
+        
+        System.out.println("Paint component 2");
+        this.setVisible(true);
+    }
+    
+    @Override
+    public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 	g2.setColor(Color.yellow);
 	g2.fillArc((int)x-150, (int)y, 150, 150, 90, 90);
@@ -84,14 +105,11 @@ public class PieMenuPanel extends javax.swing.JPanel {
         
         g2.setColor(Color.white);
         g2.fillOval((int)x-30, (int)y, 30, 30);
-        
-        System.out.println("Paint component");
-        this.setVisible(true);
     }
     
     @Override
     public Dimension getPreferredSize () {
-        Dimension dim = new Dimension(400, 300);
+        Dimension dim = new Dimension(200, 200);
         return dim;
     }
 

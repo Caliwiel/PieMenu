@@ -5,17 +5,28 @@
  */
 package piemenu;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 /**
  *
  * @author bouzekel
  */
 public class PieMenuFrame extends javax.swing.JFrame {
 
+    double x,y;
+    private PieMenuPanel piemenu_panel;
+    
     /**
      * Creates new form PieMenuFrame
      */
     public PieMenuFrame() {
         initComponents();
+        x = getWidth()/2;
+        y = getHeight()/2;
+        piemenu_panel = new PieMenuPanel(x, y);
+        piemenu_panel.setVisible(false);
     }
 
     /**
@@ -49,8 +60,24 @@ public class PieMenuFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        // TODO add your handling code here:
+       piemenu_panel.setVisible(true);
     }//GEN-LAST:event_formMouseClicked
+
+    /*public void paint(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+	g2.setColor(Color.yellow);
+	g2.fillArc((int)x-150, (int)y, 150, 150, 90, 90);
+	// Tracer un cercle
+	g2.setColor(Color.BLUE);
+	g2.fillArc((int)x-150, (int)y, 150, 150, 0, 90);	
+        g2.setColor(Color.GREEN);
+	g2.fillArc((int)x-150, (int)y, 150, 150, 180, 90);
+        g2.setColor(Color.yellow);
+	g2.fillArc((int)x-150, (int)y, 150, 150, 270, 90);
+        
+        g2.setColor(Color.white);
+        g2.fillOval((int)x-30, (int)y, 30, 30);
+    }*/
 
     /**
      * @param args the command line arguments
