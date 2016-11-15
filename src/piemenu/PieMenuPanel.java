@@ -7,6 +7,7 @@ package piemenu;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -21,15 +22,22 @@ public class PieMenuPanel extends javax.swing.JPanel {
     /**
      * Creates new form NewJPanel
      */
+    public PieMenuPanel(){
+        initComponents();
+    }
     public PieMenuPanel( double x, double y) {
         initComponents();
+        setBackground(Color.red);
+       
+        System.out.println("Init panel");
+        /*
         x = getWidth()/2;
         y = getHeight()/2;
         this.setBounds(10, 10, 200, 200);
         this.setPreferredSize(new Dimension(200, 200));
         repaint();
-        System.out.println("Init panel");
         this.setVisible(true);
+        */
     }
 
     /**
@@ -41,21 +49,31 @@ public class PieMenuPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
 
+        jLabel1.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(247, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(119, 119, 119))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jLabel1)
+                .addContainerGap(203, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -70,26 +88,30 @@ public class PieMenuPanel extends javax.swing.JPanel {
     
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        //super.paintComponent(g);
+        System.out.println("Je suis exécutée !"); 
+        //g.fillOval(20, 20, 75, 75);
         System.out.println("Paint component 1");
-       /* Graphics2D g2 = (Graphics2D) g;
+        
+        Graphics2D g2 = (Graphics2D)g;
 	g2.setColor(Color.yellow);
-	g2.fillArc((int)x-150, (int)y, 150, 150, 90, 90);
-	// Tracer un cercle
+	//g2.fillArc((int)x, (int)y, 200, 200,0, 90);
+	g2.fillArc((int)x, (int)y, 150, 150, 90, 90);
+	// Tracer un cercle        
 	g2.setColor(Color.BLUE);
-	g2.fillArc((int)x-150, (int)y, 150, 150, 0, 90);	
+	g2.fillArc((int)x, (int)y, 150, 150, 0, 90);	
         g2.setColor(Color.GREEN);
-	g2.fillArc((int)x-150, (int)y, 150, 150, 180, 90);
+	g2.fillArc((int)x, (int)y, 150, 150, 180, 90);
         g2.setColor(Color.yellow);
-	g2.fillArc((int)x-150, (int)y, 150, 150, 270, 90);
+	g2.fillArc((int)x, (int)y, 150, 150, 270, 90);
         
         g2.setColor(Color.white);
-        g2.fillOval((int)x-30, (int)y, 30, 30);*/
+        g2.fillOval((int)x, (int)y, 30, 30);
         
         System.out.println("Paint component 2");
-        this.setVisible(true);
+        //this.setVisible(true);
     }
-    
+    /*
     @Override
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
@@ -112,8 +134,9 @@ public class PieMenuPanel extends javax.swing.JPanel {
         Dimension dim = new Dimension(200, 200);
         return dim;
     }
-
+*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
