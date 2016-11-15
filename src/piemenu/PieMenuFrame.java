@@ -8,6 +8,8 @@ package piemenu;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -22,11 +24,25 @@ public class PieMenuFrame extends javax.swing.JFrame {
      * Creates new form PieMenuFrame
      */
     public PieMenuFrame() {
+        this.setTitle("Ma première fenêtre Java");
+        this.setSize(500, 500);
+        this.setLocationRelativeTo(null);               
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        x = getWidth()/2;
+        y = getHeight()/2;
+        System.out.println(x + "  " + y);
+        this.setContentPane(new PieMenuPanel(x,y));
+
+        this.setVisible(true);
+        /*
         initComponents();
         x = getWidth()/2;
         y = getHeight()/2;
-        piemenu_panel = new PieMenuPanel(x, y);
-        piemenu_panel.setVisible(false);
+        piemenu_panel = new PieMenuPanel(x, y); //Instanciation d'un objet JPanel
+        
+        PieMenuPanel pan = new PieMenuPanel();
+        this.setContentPane(pan);               
+        this.setVisible(true);*/
     }
 
     /**
@@ -61,6 +77,7 @@ public class PieMenuFrame extends javax.swing.JFrame {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
        piemenu_panel.setVisible(true);
+       System.out.println("Click fenetre");
     }//GEN-LAST:event_formMouseClicked
 
     /*public void paint(Graphics g) {
