@@ -26,16 +26,11 @@ public class PieMenuFrame extends javax.swing.JFrame {
     public PieMenuFrame() {
         this.setTitle("Ma première fenêtre Java");
         this.setSize(500, 500);
-        this.setLocationRelativeTo(null);               
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        x = getWidth()/2;
-        y = getHeight()/2;
-        System.out.println(x + "  " + y);
-        this.setContentPane(new PieMenuPanel(x,y));
-
-        this.setVisible(true);
-        /*
         initComponents();
+        /*
+        this.setLocationRelativeTo(null);               
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+        /*
         x = getWidth()/2;
         y = getHeight()/2;
         piemenu_panel = new PieMenuPanel(x, y); //Instanciation d'un objet JPanel
@@ -76,8 +71,17 @@ public class PieMenuFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-       piemenu_panel.setVisible(true);
+       
        System.out.println("Click fenetre");
+        /*x = getWidth()/2;
+        y = getHeight()/2;*/
+        System.out.println("evt : " + evt.getX() + " " + evt.getY());
+        x = evt.getX()/2;
+        y = evt.getY()/2;
+        System.out.println(x + "  " + y);
+        this.setContentPane(new PieMenuPanel(x,y,150));
+
+        this.setVisible(true);
     }//GEN-LAST:event_formMouseClicked
 
     /*public void paint(Graphics g) {
