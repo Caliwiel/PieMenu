@@ -18,6 +18,9 @@ import java.awt.Graphics2D;
 public class PieMenuPanel extends javax.swing.JPanel {
 
     double x,y;
+    int withPie;
+    int xDep, yDep;
+    
     
     /**
      * Creates new form NewJPanel
@@ -25,14 +28,20 @@ public class PieMenuPanel extends javax.swing.JPanel {
     public PieMenuPanel(){
         initComponents();
     }
-    public PieMenuPanel( double x, double y) {
+    public PieMenuPanel( double x, double y, int width) {
         initComponents();
         setBackground(Color.red);
        
         System.out.println("Init panel");
+        
+        this.x = x;
+        this.y = y;
+        this.withPie = width;
+        System.out.println("panel cons " + x  + "  " + y);
+        
+        xDep = (int)x - ((int)x - withPie);
+        yDep = (int)y - ((int)y - withPie);
         /*
-        x = getWidth()/2;
-        y = getHeight()/2;
         this.setBounds(10, 10, 200, 200);
         this.setPreferredSize(new Dimension(200, 200));
         repaint();
@@ -92,21 +101,22 @@ public class PieMenuPanel extends javax.swing.JPanel {
         System.out.println("Je suis exécutée !"); 
         //g.fillOval(20, 20, 75, 75);
         System.out.println("Paint component 1");
+        System.out.println("panel " + x  + "  " + y);
         
         Graphics2D g2 = (Graphics2D)g;
 	g2.setColor(Color.yellow);
 	//g2.fillArc((int)x, (int)y, 200, 200,0, 90);
-	g2.fillArc((int)x, (int)y, 150, 150, 90, 90);
+	g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
 	// Tracer un cercle        
 	g2.setColor(Color.BLUE);
-	g2.fillArc((int)x, (int)y, 150, 150, 0, 90);	
+	g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);	
         g2.setColor(Color.GREEN);
-	g2.fillArc((int)x, (int)y, 150, 150, 180, 90);
+	g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
         g2.setColor(Color.yellow);
-	g2.fillArc((int)x, (int)y, 150, 150, 270, 90);
+	g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
         
         g2.setColor(Color.white);
-        g2.fillOval((int)x, (int)y, 30, 30);
+        g2.fillOval(xDep, yDep, 30, 30);
         
         System.out.println("Paint component 2");
         //this.setVisible(true);
