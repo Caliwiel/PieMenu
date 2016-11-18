@@ -97,9 +97,17 @@ public class PieMenuPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         setBackground(new java.awt.Color(255, 255, 255));
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                onMouseMoved(evt);
+            }
+        });
         addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                onMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                onMouseReleased(evt);
             }
         });
 
@@ -115,13 +123,17 @@ public class PieMenuPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        /* x = evt.getX();
-        y = evt.getY();
-        paint(getGraphics());*/
-        // paintComponent(getGraphics());
-        // repaint();
-    }//GEN-LAST:event_formMouseClicked
+    private void onMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_onMouseMoved
+
+    private void onMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_onMousePressed
+
+    private void onMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_onMouseReleased
 
     @Override
     public void paintComponent(Graphics g) {
@@ -149,31 +161,35 @@ public class PieMenuPanel extends javax.swing.JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
         Graphics2D g2 = (Graphics2D) g;
-
+        // Tracer les arcs de cercle 
         g2.setColor(new Color(203, 219, 244));
-        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
-        
-        // Tracer un cercle              
+        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);                    
         g2.setColor(new Color(199, 204, 214));
         g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);
-        //g2.drawArc(xDep, yDep, withPie, withPie, 0, 90);        
         g2.setColor(new Color(199, 204, 214));
         g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
         g2.setColor(new Color(203, 219, 244));
         g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
         g2.setColor(new Color(232, 234, 237));
         g2.fillOval(xDep + withPie / 2 - 15, yDep + withPie / 2 - DIAMETRE_CENTRE, DIAMETRE_CENTRE * 2, DIAMETRE_CENTRE * 2);
-        // g2.setColor(Color.BLUE);
-        // g2.setStroke(new BasicStroke(20));
+        // Dessiner Labels
         g2.setColor(Color.GRAY);
         g2.drawString("Suivant", xDep+20, yDep+50);
         g2.drawString("Précedent", xDep+5+withPie/2, yDep+50);
         g2.drawString("Supprimer", xDep+15, yDep+40+withPie/2);
         g2.drawString("Modifier", xDep+10+withPie/2, yDep+40+withPie/2);
+       
+        
     }
 
+    private void highlightSuivant(){
+        Graphics2D g2 = (Graphics2D) getGraphics();
+         
+         g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);  
+         g2.setPaint(new GradientPaint(0, 0, Color.WHITE,
+                400, 400, Color.lightGray));
+    }
     /*
     @Override
     public void paint(Graphics g) {
