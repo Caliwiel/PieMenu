@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RadialGradientPaint;
+import java.awt.RenderingHints;
 
 /**
  *
@@ -42,26 +44,28 @@ public class PieMenuPanel extends javax.swing.JPanel {
         this.withPie = width;
     }
 
-    private void init() {    
-        
+    private void init() {
+
     }
 
     private Buttuns getButtun(double x, double y) {
         Buttuns buttuns;
         if (((x < posClicX + DIAMETRE_CENTRE) && (y < posClickY + DIAMETRE_CENTRE)) || ((x < posClicX + DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE)) || ((x < posClicX - DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE)) || ((x < posClicX - DIAMETRE_CENTRE) && (y < posClickY + DIAMETRE_CENTRE))) {
+            //dans cercle
             buttuns = Buttuns.AUCUN;
-        } else {
-            if (x > posClicX) {
-                if (y > posClickY) {
-                    buttuns = Buttuns.PRECEDENT;
-                } else {
-                    buttuns = Buttuns.MODIFIER;
-                }
-            } else if (y > posClickY) {
-                buttuns = Buttuns.SUIVANT;
+        } else if (posClicX > x + withPie / 2 || posClicX < x - withPie / 2 || posClickY > y + withPie / 2 || posClickY < y - withPie / 2) {
+            //hors pie menu
+            buttuns = Buttuns.AUCUN;
+        } else if (x > posClicX) {
+            if (y > posClickY) {
+                buttuns = Buttuns.PRECEDENT;
             } else {
-                buttuns = Buttuns.SUPPRIMER;
+                buttuns = Buttuns.MODIFIER;
             }
+        } else if (y > posClickY) {
+            buttuns = Buttuns.SUIVANT;
+        } else {
+            buttuns = Buttuns.SUPPRIMER;
         }
         return buttuns;
     }
@@ -123,13 +127,8 @@ public class PieMenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void onMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMouseMoved
-        Buttuns buttun = getButtun(evt.getX(), evt.getY());
-        switch(buttun) {
-            case AUCUN : {
-                break;
-            }
-        }
-        highlightSuivant();
+       
+        
     }//GEN-LAST:event_onMouseMoved
 
     private void onMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMousePressed
@@ -169,30 +168,73 @@ public class PieMenuPanel extends javax.swing.JPanel {
         Graphics2D g2 = (Graphics2D) g;
         // Tracer les arcs de cercle 
         g2.setColor(new Color(203, 219, 244));
-        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);                    
+        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
         g2.setColor(new Color(199, 204, 214));
         g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);
         g2.setColor(new Color(199, 204, 214));
         g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
         g2.setColor(new Color(203, 219, 244));
         g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
-        g2.setColor(new Color(232, 234, 237));
-        g2.fillOval(xDep + withPie / 2 - 15, yDep + withPie / 2 - DIAMETRE_CENTRE, DIAMETRE_CENTRE * 2, DIAMETRE_CENTRE * 2);
+        drawCircle(g2);
         // Dessiner Labels
         g2.setColor(Color.GRAY);
-        g2.drawString("Suivant", xDep+20, yDep+50);
-        g2.drawString("Précedent", xDep+5+withPie/2, yDep+50);
-        g2.drawString("Supprimer", xDep+15, yDep+40+withPie/2);
-        g2.drawString("Modifier", xDep+10+withPie/2, yDep+40+withPie/2);
-       
-        
+        g2.drawString("Suivant", xDep + 20, yDep + 50);
+        g2.drawString("Précedent", xDep + 5 + withPie / 2, yDep + 50);
+        g2.drawString("Supprimer", xDep + 15, yDep + 40 + withPie / 2);
+        g2.drawString("Modifier", xDep + 10 + withPie / 2, yDep + 40 + withPie / 2);
     }
 
-    private void highlightSuivant(){
-        Graphics2D g2 = (Graphics2D) getGraphics();   
-        paint(g2);
-        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);  
-        g2.setPaint(new GradientPaint(0, 0, Color.WHITE,400, 400, Color.lightGray));
+    private void drawCircle(Graphics2D g2) {
+        g2.setColor(new Color(232, 234, 237));
+        g2.fillOval(xDep + withPie / 2 - 15, yDep + withPie / 2 - DIAMETRE_CENTRE, DIAMETRE_CENTRE * 2, DIAMETRE_CENTRE * 2);
+    }
+
+    public void highlightSuivant() {
+        Graphics2D g2 = (Graphics2D) getGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        //paint(g2);
+        g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
+        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
+        g2.setColor(new Color(121, 134, 155));
+        g2.drawString("Suivant", xDep + 20, yDep + 50);
+        drawCircle(g2);
+    }
+
+    public void highlightPrecedent() {
+        Graphics2D g2 = (Graphics2D) getGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        //paint(g2);
+        g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
+        g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);
+        g2.setColor(new Color(121, 134, 155));
+        g2.drawString("Précedent", xDep + 5 + withPie / 2, yDep + 50);
+        drawCircle(g2);
+    }
+
+    public void highlightModifier() {
+        Graphics2D g2 = (Graphics2D) getGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        //paint(g2);
+        g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
+        g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
+        g2.setColor(new Color(121, 134, 155));
+        g2.drawString("Modifier", xDep + 10 + withPie / 2, yDep + 40 + withPie / 2);
+        drawCircle(g2);
+    }
+
+    public void highlightSupprimer() {
+        Graphics2D g2 = (Graphics2D) getGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        //paint(g2);
+        g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
+        g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
+        g2.setColor(new Color(121, 134, 155));
+        g2.drawString("Supprimer", xDep + 15, yDep + 40 + withPie / 2);
+        drawCircle(g2);
     }
     /*
     @Override
