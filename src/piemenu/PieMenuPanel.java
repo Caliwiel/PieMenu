@@ -13,12 +13,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
 
 /**
  *
  * @author bouzekel
  */
-public class PieMenuPanel extends javax.swing.JPanel {
+public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     private final static int DIAMETRE_CENTRE = 15;
     double x, y;
@@ -45,7 +46,7 @@ public class PieMenuPanel extends javax.swing.JPanel {
     }
 
     private void init() {
-
+       this.statemachine = new StateMachine(this);
     }
 
     private Buttuns getButtun(double x, double y) {
@@ -53,7 +54,7 @@ public class PieMenuPanel extends javax.swing.JPanel {
         if (((x < posClicX + DIAMETRE_CENTRE) && (y < posClickY + DIAMETRE_CENTRE)) || ((x < posClicX + DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE)) || ((x < posClicX - DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE)) || ((x < posClicX - DIAMETRE_CENTRE) && (y < posClickY + DIAMETRE_CENTRE))) {
             //dans cercle
             buttuns = Buttuns.AUCUN;
-        } else if (posClicX > x + withPie / 2 || posClicX < x - withPie / 2 || posClickY > y + withPie / 2 || posClickY < y - withPie / 2) {
+        } else if ((posClicX > x + withPie / 2 || posClicX < x - withPie / 2) && (posClickY > y + withPie / 2 || posClickY < y - withPie / 2)) {
             //hors pie menu
             buttuns = Buttuns.AUCUN;
         } else if (x > posClicX) {
@@ -88,6 +89,10 @@ public class PieMenuPanel extends javax.swing.JPanel {
         this.yDep = (int) (y - withPie / 2) - 30;
         this.posClickY = y;
         repaint();
+    }
+
+    public StateMachine getStatemachine() {
+        return statemachine;
     }
 
     /**
@@ -127,16 +132,17 @@ public class PieMenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void onMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMouseMoved
-       
-        
+        this.statemachine.handleMove();
     }//GEN-LAST:event_onMouseMoved
 
     private void onMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMousePressed
-        // TODO add your handling code here:
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            this.statemachine.handleClickLeft();
+        }
     }//GEN-LAST:event_onMousePressed
 
     private void onMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMouseReleased
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_onMouseReleased
 
     @Override
@@ -189,6 +195,7 @@ public class PieMenuPanel extends javax.swing.JPanel {
         g2.fillOval(xDep + withPie / 2 - 15, yDep + withPie / 2 - DIAMETRE_CENTRE, DIAMETRE_CENTRE * 2, DIAMETRE_CENTRE * 2);
     }
 
+    @Override
     public void highlightSuivant() {
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -201,6 +208,7 @@ public class PieMenuPanel extends javax.swing.JPanel {
         drawCircle(g2);
     }
 
+    @Override
     public void highlightPrecedent() {
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -213,6 +221,7 @@ public class PieMenuPanel extends javax.swing.JPanel {
         drawCircle(g2);
     }
 
+    @Override
     public void highlightModifier() {
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -225,6 +234,7 @@ public class PieMenuPanel extends javax.swing.JPanel {
         drawCircle(g2);
     }
 
+    @Override
     public void highlightSupprimer() {
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -236,6 +246,7 @@ public class PieMenuPanel extends javax.swing.JPanel {
         g2.drawString("Supprimer", xDep + 15, yDep + 40 + withPie / 2);
         drawCircle(g2);
     }
+
     /*
     @Override
     public void paint(Graphics g) {
@@ -260,6 +271,62 @@ public class PieMenuPanel extends javax.swing.JPanel {
         return dim;
     }
      */
+    @Override
+    public void highlight(double x, double y) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean inModif() {
+        return getButtun(posClicX, posClickY) == Buttuns.MODIFIER;
+    }
+
+    @Override
+    public boolean inPrec() {
+        return getButtun(posClicX, posClickY) == Buttuns.PRECEDENT;
+    }
+
+    @Override
+    public boolean inSuiv() {
+        System.out.println(getButtun(posClicX, posClickY).toString());
+        //return getButtun(posClicX, posClickY) == Buttuns.SUIVANT;
+        return true;
+    }
+
+    @Override
+    public boolean inSuppr() {
+        return getButtun(posClicX, posClickY) == Buttuns.SUPPRIMER;
+    }
+
+    @Override
+    public boolean inAfficher() {
+        return getButtun(posClicX, posClickY) == Buttuns.AUCUN;
+    }
+
+    @Override
+    public void afficherPie() {
+        this.setVisible(true);
+    }
+
+    @Override
+    public void enleverPie() {
+        this.setVisible(false);
+    }
+
+    @Override
+    public double getXevent() {
+        return posClicX;
+    }
+
+    @Override
+    public double getYevent() {
+        return posClickY;
+    }
+
+    @Override
+    public void setAllReset() {
+        paint(getGraphics());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
