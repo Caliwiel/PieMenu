@@ -9,10 +9,7 @@ package piemenu;
  *
  * @author bouzekel
  */
-public enum Buttuns {
-    SUIVANT,
-    PRECEDENT,
-    SUPPRIMER,
-    MODIFIER,
-    AUCUN
+public interface ITransformable {
+    
+    public void highlight(double x, double y);
 }

@@ -40,7 +40,6 @@ public class PieMenuPanel extends javax.swing.JPanel {
         this.x = x;
         this.y = y;
         this.withPie = width;
-
     }
 
     private void init() {    
@@ -124,7 +123,13 @@ public class PieMenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void onMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMouseMoved
-        // TODO add your handling code here:
+        Buttuns buttun = getButtun(evt.getX(), evt.getY());
+        switch(buttun) {
+            case AUCUN : {
+                break;
+            }
+        }
+        highlightSuivant();
     }//GEN-LAST:event_onMouseMoved
 
     private void onMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMousePressed
@@ -184,11 +189,10 @@ public class PieMenuPanel extends javax.swing.JPanel {
     }
 
     private void highlightSuivant(){
-        Graphics2D g2 = (Graphics2D) getGraphics();
-         
-         g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);  
-         g2.setPaint(new GradientPaint(0, 0, Color.WHITE,
-                400, 400, Color.lightGray));
+        Graphics2D g2 = (Graphics2D) getGraphics();   
+        paint(g2);
+        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);  
+        g2.setPaint(new GradientPaint(0, 0, Color.WHITE,400, 400, Color.lightGray));
     }
     /*
     @Override
