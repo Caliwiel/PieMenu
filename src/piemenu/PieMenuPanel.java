@@ -42,7 +42,20 @@ public class PieMenuPanel extends javax.swing.JPanel {
     }
 
     private Buttuns getButtun(double x, double y) {
-        Buttuns buttuns = Buttuns.SUIVANT;
+        Buttuns buttuns;
+        if (x>posClicX) {
+            if( y>posClickY) {
+                buttuns = Buttuns.PRECEDENT;
+            } else {
+                buttuns = Buttuns.MODIFIER;
+            }
+        } else {
+            if(y>posClickY) {
+                buttuns = Buttuns.SUIVANT;
+            } else {
+                buttuns = Buttuns.SUPPRIMER;
+            }
+        }
         return buttuns;
     }
     
