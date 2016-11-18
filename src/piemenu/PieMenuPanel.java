@@ -20,7 +20,9 @@ public class PieMenuPanel extends javax.swing.JPanel {
     double x,y;
     int withPie;
     int xDep, yDep;
-    
+    private double posClicX;
+    private double posClickY; 
+    private StateMachine statemachine;
     
     /**
      * Creates new form NewJPanel
@@ -31,31 +33,25 @@ public class PieMenuPanel extends javax.swing.JPanel {
     public PieMenuPanel(int h, int w, double x, double y, int width) {
         initComponents();
         setBackground(Color.red);
-        System.out.println("Init panel");
         
         this.setPreferredSize(new Dimension(w, h));
         this.x = x;
         this.y = y;
         this.withPie = width;
-        System.out.println("panel cons " + x  + "  " + y);
         
-       // xDep = (int)x - ((int)x - withPie);
-       // yDep = (int)y - ((int)y - withPie);
-        /*
-        this.setBounds(10, 10, 200, 200);
-        this.setPreferredSize(new Dimension(200, 200));
-        repaint();
-        this.setVisible(true);
-        */
     }
 
+    private Buttuns getButtun(double x, double y) {
+        Buttuns buttuns = Buttuns.SUIVANT;
+        return buttuns;
+    }
+    
     public double getXpie() {
         return xDep;
     }
 
     public void setXpie(double x) {
         this.xDep = (int)( x - withPie/2) ;
-        System.out.println("CHANGE X : "+xDep);
         repaint();
     }
 
@@ -120,10 +116,6 @@ public class PieMenuPanel extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("Je suis exécutée !"); 
-        //g.fillOval(20, 20, 75, 75);
-        System.out.println("Paint component 1");
-        System.out.println("panel " + xDep  + "  " + yDep);
         
         Graphics2D g2 = (Graphics2D)g;
 	g2.setColor(Color.yellow);
@@ -147,13 +139,9 @@ public class PieMenuPanel extends javax.swing.JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        System.out.println("PAINT !"); 
-        //g.fillOval(20, 20, 75, 75);
-        System.out.println("panel " + xDep  + "  " + yDep);
         
         Graphics2D g2 = (Graphics2D)g;
 	g2.setColor(Color.yellow);
-	//g2.fillArc((int)x, (int)y, 200, 200,0, 90);
 	g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
 	// Tracer un cercle        
 	g2.setColor(Color.BLUE);
