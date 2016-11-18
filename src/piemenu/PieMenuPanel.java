@@ -5,6 +5,7 @@
  */
 package piemenu;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
@@ -17,40 +18,47 @@ import java.awt.Graphics2D;
  */
 public class PieMenuPanel extends javax.swing.JPanel {
 
-    double x,y;
+    private final static int DIAMETRE_CENTRE = 15;
+    double x, y;
     int withPie;
     int xDep, yDep;
     private double posClicX;
-    private double posClickY; 
+    private double posClickY;
     private StateMachine statemachine;
-    
+
     /**
      * Creates new form NewJPanel
      */
-    public PieMenuPanel(){
+    public PieMenuPanel() {
         initComponents();
     }
+
     public PieMenuPanel(int h, int w, double x, double y, int width) {
         initComponents();
-        setBackground(Color.red);
-        
         this.setPreferredSize(new Dimension(w, h));
+        init();
         this.x = x;
         this.y = y;
         this.withPie = width;
+
+    }
+
+    private void init() {    
         
     }
 
     private Buttuns getButtun(double x, double y) {
         Buttuns buttuns;
-        if (x>posClicX) {
-            if( y>posClickY) {
-                buttuns = Buttuns.PRECEDENT;
-            } else {
-                buttuns = Buttuns.MODIFIER;
-            }
+        if (((x < posClicX + DIAMETRE_CENTRE) && (y < posClickY + DIAMETRE_CENTRE)) || ((x < posClicX + DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE)) || ((x < posClicX - DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE)) || ((x < posClicX - DIAMETRE_CENTRE) && (y < posClickY + DIAMETRE_CENTRE))) {
+            buttuns = Buttuns.AUCUN;
         } else {
-            if(y>posClickY) {
+            if (x > posClicX) {
+                if (y > posClickY) {
+                    buttuns = Buttuns.PRECEDENT;
+                } else {
+                    buttuns = Buttuns.MODIFIER;
+                }
+            } else if (y > posClickY) {
                 buttuns = Buttuns.SUIVANT;
             } else {
                 buttuns = Buttuns.SUPPRIMER;
@@ -58,13 +66,14 @@ public class PieMenuPanel extends javax.swing.JPanel {
         }
         return buttuns;
     }
-    
+
     public double getXpie() {
         return xDep;
     }
 
     public void setXpie(double x) {
-        this.xDep = (int)( x - withPie/2) ;
+        this.xDep = (int) (x - withPie / 2);
+        this.posClicX = x;
         repaint();
     }
 
@@ -73,12 +82,11 @@ public class PieMenuPanel extends javax.swing.JPanel {
     }
 
     public void setYpie(double y) {
-        this.yDep = (int) (y - withPie/2 ) - 30;
+        this.yDep = (int) (y - withPie / 2) - 30;
+        this.posClickY = y;
         repaint();
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,50 +96,39 @@ public class PieMenuPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-
-        setBackground(new java.awt.Color(51, 102, 255));
+        setBackground(new java.awt.Color(255, 255, 255));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
 
-        jLabel1.setText("jLabel1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(247, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(119, 119, 119))
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(jLabel1)
-                .addContainerGap(203, Short.MAX_VALUE))
+            .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-       /* x = evt.getX();
+        /* x = evt.getX();
         y = evt.getY();
         paint(getGraphics());*/
-       // paintComponent(getGraphics());
-      // repaint();
+        // paintComponent(getGraphics());
+        // repaint();
     }//GEN-LAST:event_formMouseClicked
 
-    
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        /*    super.paintComponent(g);
         
         Graphics2D g2 = (Graphics2D)g;
-	g2.setColor(Color.yellow);
+	g2.setColor(Color.LIGHT_GRAY);
 	
 	g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
 	// Tracer un cercle        
@@ -143,31 +140,40 @@ public class PieMenuPanel extends javax.swing.JPanel {
 	g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
         
         g2.setColor(Color.white);
-        g2.fillOval(xDep, yDep, 30, 30);
+        g2.fillOval(xDep+withPie/2-15, yDep+withPie/2-DIAMETRE_CENTRE, DIAMETRE_CENTRE*2, DIAMETRE_CENTRE*2);
         
-        System.out.println("Paint component 2"); 
+        System.out.println("Paint component 2"); */
         //this.setVisible(true);
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor(new Color(203, 219, 244));
+        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
         
-        Graphics2D g2 = (Graphics2D)g;
-	g2.setColor(Color.yellow);
-	g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
-	// Tracer un cercle        
-	g2.setColor(Color.BLUE);
-	g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);	
-        g2.setColor(Color.GREEN);
-	g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
-        g2.setColor(Color.yellow);
-	g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
-        
-        g2.setColor(Color.white);
-        g2.fillOval(xDep, yDep, 30, 30);
+        // Tracer un cercle              
+        g2.setColor(new Color(199, 204, 214));
+        g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);
+        //g2.drawArc(xDep, yDep, withPie, withPie, 0, 90);        
+        g2.setColor(new Color(199, 204, 214));
+        g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
+        g2.setColor(new Color(203, 219, 244));
+        g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
+        g2.setColor(new Color(232, 234, 237));
+        g2.fillOval(xDep + withPie / 2 - 15, yDep + withPie / 2 - DIAMETRE_CENTRE, DIAMETRE_CENTRE * 2, DIAMETRE_CENTRE * 2);
+        // g2.setColor(Color.BLUE);
+        // g2.setStroke(new BasicStroke(20));
+        g2.setColor(Color.GRAY);
+        g2.drawString("Suivant", xDep+20, yDep+50);
+        g2.drawString("Précedent", xDep+5+withPie/2, yDep+50);
+        g2.drawString("Supprimer", xDep+15, yDep+40+withPie/2);
+        g2.drawString("Modifier", xDep+10+withPie/2, yDep+40+withPie/2);
     }
-    
+
     /*
     @Override
     public void paint(Graphics g) {
@@ -191,9 +197,8 @@ public class PieMenuPanel extends javax.swing.JPanel {
         Dimension dim = new Dimension(200, 200);
         return dim;
     }
-*/
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
