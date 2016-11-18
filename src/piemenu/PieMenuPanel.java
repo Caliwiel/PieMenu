@@ -28,19 +28,19 @@ public class PieMenuPanel extends javax.swing.JPanel {
     public PieMenuPanel(){
         initComponents();
     }
-    public PieMenuPanel( double x, double y, int width) {
+    public PieMenuPanel(int h, int w, double x, double y, int width) {
         initComponents();
         setBackground(Color.red);
-       
         System.out.println("Init panel");
         
+        this.setPreferredSize(new Dimension(w, h));
         this.x = x;
         this.y = y;
         this.withPie = width;
         System.out.println("panel cons " + x  + "  " + y);
         
-        xDep = (int)x - ((int)x - withPie);
-        yDep = (int)y - ((int)y - withPie);
+       // xDep = (int)x - ((int)x - withPie);
+       // yDep = (int)y - ((int)y - withPie);
         /*
         this.setBounds(10, 10, 200, 200);
         this.setPreferredSize(new Dimension(200, 200));
@@ -49,6 +49,27 @@ public class PieMenuPanel extends javax.swing.JPanel {
         */
     }
 
+    public double getXpie() {
+        return xDep;
+    }
+
+    public void setXpie(double x) {
+        this.xDep = (int)( x - withPie/2) ;
+        System.out.println("CHANGE X : "+xDep);
+        repaint();
+    }
+
+    public double getYpie() {
+        return yDep;
+    }
+
+    public void setYpie(double y) {
+        this.yDep = (int) (y - withPie/2 ) - 30;
+        repaint();
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +81,7 @@ public class PieMenuPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(51, 102, 255));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -91,17 +113,43 @@ public class PieMenuPanel extends javax.swing.JPanel {
         y = evt.getY();
         paint(getGraphics());*/
        // paintComponent(getGraphics());
-       repaint();
+      // repaint();
     }//GEN-LAST:event_formMouseClicked
 
     
     @Override
     public void paintComponent(Graphics g) {
-        //super.paintComponent(g);
+        super.paintComponent(g);
         System.out.println("Je suis exécutée !"); 
         //g.fillOval(20, 20, 75, 75);
         System.out.println("Paint component 1");
-        System.out.println("panel " + x  + "  " + y);
+        System.out.println("panel " + xDep  + "  " + yDep);
+        
+        Graphics2D g2 = (Graphics2D)g;
+	g2.setColor(Color.yellow);
+	
+	g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
+	// Tracer un cercle        
+	g2.setColor(Color.BLUE);
+	g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);	
+        g2.setColor(Color.GREEN);
+	g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
+        g2.setColor(Color.yellow);
+	g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
+        
+        g2.setColor(Color.white);
+        g2.fillOval(xDep, yDep, 30, 30);
+        
+        System.out.println("Paint component 2"); 
+        //this.setVisible(true);
+    }
+    
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        System.out.println("PAINT !"); 
+        //g.fillOval(20, 20, 75, 75);
+        System.out.println("panel " + xDep  + "  " + yDep);
         
         Graphics2D g2 = (Graphics2D)g;
 	g2.setColor(Color.yellow);
@@ -117,10 +165,8 @@ public class PieMenuPanel extends javax.swing.JPanel {
         
         g2.setColor(Color.white);
         g2.fillOval(xDep, yDep, 30, 30);
-        
-        System.out.println("Paint component 2");
-        //this.setVisible(true);
     }
+    
     /*
     @Override
     public void paint(Graphics g) {
