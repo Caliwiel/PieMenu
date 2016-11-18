@@ -13,8 +13,9 @@ public class StateMachine {
     private States state;
     private ITransformable transformable;
     
-    public StateMachine() {
+    public StateMachine(ITransformable trans) {
         state = States.INIT;
+        this.transformable = trans;
     }
 
     public States getState() {
@@ -104,22 +105,22 @@ public class StateMachine {
             case AFFICHER: {
                 if (transformable.inSuiv()){
                     //A3
-                    transformable.hilightSuivant();
+                    transformable.highlightSuivant();
                     state = state.SUIVANT;
                 }
                 else if (transformable.inPrec()){
                     //A4
-                    transformable.hilightPrecedent();
+                    transformable.highlightPrecedent();
                     state = state.PRECEDENT;
                 }
                 else if (transformable.inModif()){
                     //A5
-                    transformable.hilightModifier();
+                    transformable.highlightModifier();
                     state = state.MODIFIER;
                 }
                 else if (transformable.inSuppr()){
                     //A6
-                    transformable.hilightSupprimer();
+                    transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
                 }
                 break;
@@ -130,12 +131,12 @@ public class StateMachine {
                 }
                 else if (transformable.inPrec()){
                     //A4
-                    transformable.hilightPrecedent();
+                    transformable.highlightPrecedent();
                     state = state.PRECEDENT;
                 }
                 else if (transformable.inSuppr()){
                     //A6
-                    transformable.hilightSupprimer();
+                    transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
                 }
                 else if (transformable.inAfficher()){
@@ -151,12 +152,12 @@ public class StateMachine {
                 }
                 else if (transformable.inPrec()){
                     //A4
-                    transformable.hilightPrecedent();
+                    transformable.highlightPrecedent();
                     state = state.PRECEDENT;
                 }
                 else if (transformable.inSuppr()){
                     //A6
-                    transformable.hilightSupprimer();
+                    transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
                 }
                 else if (transformable.inAfficher()){
@@ -169,7 +170,7 @@ public class StateMachine {
             case PRECEDENT: {
                 if (transformable.inModif()){
                     //A5
-                    transformable.hilightModifier();
+                    transformable.highlightModifier();
                     state = state.MODIFIER;
                 }
                 else if (transformable.inPrec()){
@@ -177,7 +178,7 @@ public class StateMachine {
                 }
                 else if (transformable.inSuiv()){
                     //A3
-                    transformable.hilightSuivant();
+                    transformable.highlightSuivant();
                     state = state.SUIVANT;
                 }
                 else if (transformable.inAfficher()){
@@ -190,12 +191,12 @@ public class StateMachine {
             case SUPPRIMER: {
                 if (transformable.inModif()){
                     //A5
-                    transformable.hilightModifier();
+                    transformable.highlightModifier();
                     state = state.MODIFIER;
                 }
                 else if (transformable.inSuiv()){
                     //A3
-                    transformable.hilightSuivant();
+                    transformable.highlightSuivant();
                     state = state.SUIVANT;
                 }
                 else if (transformable.inSuppr()){

@@ -8,6 +8,7 @@ package piemenu;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -16,10 +17,10 @@ import javax.swing.JPanel;
  * @author bouzekel
  */
 public class PieMenuFrame extends javax.swing.JFrame {
-
-    double x,y;
-    private PieMenuPanel piemenu_panel;
     
+    double x, y;
+    private PieMenuPanel piemenu_panel;
+
     /**
      * Creates new form PieMenuFrame
      */
@@ -27,13 +28,13 @@ public class PieMenuFrame extends javax.swing.JFrame {
         this.setTitle("Ma première fenêtre Java");
         this.setSize(500, 500);
         initComponents();
-        piemenu_panel = new PieMenuPanel(getHeight(), getWidth(),x,y,150);
+        piemenu_panel = new PieMenuPanel(getHeight(), getWidth(), x, y, 150);
         this.setContentPane(piemenu_panel);
         piemenu_panel.setVisible(false);
         /*
         this.setLocationRelativeTo(null);               
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
-        /*
+ /*
         x = getWidth()/2;
         y = getHeight()/2;
         piemenu_panel = new PieMenuPanel(x, y); //Instanciation d'un objet JPanel
@@ -74,20 +75,24 @@ public class PieMenuFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-       
-       System.out.println("Click fenetre");
-       
-        /*x = getWidth()/2;
-        y = getHeight()/2;*/
-        System.out.println("evt : " + evt.getX() + " " + evt.getY());
-        x = evt.getX();
-        y = evt.getY();
-        //this.setContentPane(new PieMenuPanel(x,y,150));
-        piemenu_panel.setXpie(x);
-        piemenu_panel.setYpie(y);
         
-        this.setVisible(true);
-        piemenu_panel.setVisible(true);
+        System.out.println("Click fenetre");
+        if (evt.getButton() == MouseEvent.BUTTON3) {
+            /*x = getWidth()/2;
+        y = getHeight()/2;*/
+            System.out.println("evt : " + evt.getX() + " " + evt.getY());
+            x = evt.getX();
+            y = evt.getY();
+            //this.setContentPane(new PieMenuPanel(x,y,150));
+            piemenu_panel.setXpie(x);
+            piemenu_panel.setYpie(y);
+            
+            this.setVisible(true);
+            piemenu_panel.setVisible(true);
+            piemenu_panel.getStatemachine().handleClickRight();
+        } else {
+            piemenu_panel.setVisible(false);
+        }
     }//GEN-LAST:event_formMouseClicked
 
     /*public void paint(Graphics g) {
@@ -105,7 +110,6 @@ public class PieMenuFrame extends javax.swing.JFrame {
         g2.setColor(Color.white);
         g2.fillOval((int)x-30, (int)y, 30, 30);
     }*/
-
     /**
      * @param args the command line arguments
      */

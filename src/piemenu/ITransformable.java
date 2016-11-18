@@ -25,17 +25,17 @@ public interface ITransformable {
     //A2
     public void enleverPie();
     //A3
-    public void hilightSuivant();
+    public void highlightSuivant();
     //A4
-    public void hilightPrecedent();
+    public void highlightPrecedent();
     //A5
-    public void hilightModifier();
+    public void highlightModifier();
     //A6
-    public void hilightSupprimer();
+    public void highlightSupprimer();
     //A7.1
-    public double getX();
+    public double getXevent();
     //A7.2
-    public double getY();
+    public double getYevent();
     //A8
     public void setAllReset();
 }
