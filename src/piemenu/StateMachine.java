@@ -10,9 +10,10 @@ package piemenu;
  * @author bouzekel
  */
 public class StateMachine {
+
     private States state;
     private ITransformable transformable;
-    
+
     public StateMachine(ITransformable trans) {
         state = States.INIT;
         this.transformable = trans;
@@ -25,7 +26,7 @@ public class StateMachine {
     public void setState(States state) {
         this.state = state;
     }
-       
+
     public void handleClickLeft() {
         switch (state) {
             case INIT: {
@@ -64,8 +65,8 @@ public class StateMachine {
             }
         }
     }
-    
-    public void handleClickRight (){
+
+    public void handleClickRight() {
         switch (state) {
             case INIT: {
                 //A1
@@ -94,32 +95,62 @@ public class StateMachine {
             }
         }
     }
-    
-    
-    public void handleMove(double x, double y) {
-        System.out.println("handle move  :" + x  + "  "  + y);
+
+    public void handlePressed() {
         switch (state) {
             case INIT: {
                 //interdit
                 break;
             }
             case AFFICHER: {
-                if (transformable.inSuiv(x,y)){
+                transformable.setAllReset();
+                state = state.AFFICHER;
+                break;
+            }
+            case SUIVANT: {
+                transformable.selectSuivant();
+                state = state.SUIVANT;
+                break;
+            }
+            case MODIFIER: {
+                transformable.selectModifier();
+                state = state.MODIFIER;
+                break;
+            }
+            case PRECEDENT: {
+                transformable.selectPrecedent();
+                state = state.PRECEDENT;
+                break;
+            }
+            case SUPPRIMER: {
+                transformable.selectSupprimer();
+                state = state.SUPPRIMER;
+                break;
+            }
+        }
+    }
+
+    public void handleMove(double x, double y) {
+        System.out.println("handle move  :" + x + "  " + y);
+        switch (state) {
+            case INIT: {
+                //interdit
+                break;
+            }
+            case AFFICHER: {
+                if (transformable.inSuiv(x, y)) {
                     //A3
                     transformable.highlightSuivant();
                     state = state.SUIVANT;
-                }
-                else if (transformable.inPrec(x,y)){
+                } else if (transformable.inPrec(x, y)) {
                     //A4
                     transformable.highlightPrecedent();
                     state = state.PRECEDENT;
-                }
-                else if (transformable.inModif(x,y)){
+                } else if (transformable.inModif(x, y)) {
                     //A5
                     transformable.highlightModifier();
                     state = state.MODIFIER;
-                }
-                else if (transformable.inSuppr(x,y)){
+                } else if (transformable.inSuppr(x, y)) {
                     //A6
                     transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
@@ -127,20 +158,17 @@ public class StateMachine {
                 break;
             }
             case SUIVANT: {
-                if (transformable.inSuiv(x,y)){
+                if (transformable.inSuiv(x, y)) {
                     state = state.SUIVANT;
-                }
-                else if (transformable.inPrec(x,y)){
+                } else if (transformable.inPrec(x, y)) {
                     //A4
                     transformable.highlightPrecedent();
                     state = state.PRECEDENT;
-                }
-                else if (transformable.inSuppr(x,y)){
+                } else if (transformable.inSuppr(x, y)) {
                     //A6
                     transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
-                }
-                else if (transformable.inAfficher(x,y)){
+                } else if (transformable.inAfficher(x, y)) {
                     //A8
                     transformable.setAllReset();
                     state = state.AFFICHER;
@@ -148,20 +176,17 @@ public class StateMachine {
                 break;
             }
             case MODIFIER: {
-                if (transformable.inModif(x,y)){
+                if (transformable.inModif(x, y)) {
                     state = state.MODIFIER;
-                }
-                else if (transformable.inPrec(x,y)){
+                } else if (transformable.inPrec(x, y)) {
                     //A4
                     transformable.highlightPrecedent();
                     state = state.PRECEDENT;
-                }
-                else if (transformable.inSuppr(x,y)){
+                } else if (transformable.inSuppr(x, y)) {
                     //A6
                     transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
-                }
-                else if (transformable.inAfficher(x,y)){
+                } else if (transformable.inAfficher(x, y)) {
                     //A8
                     transformable.setAllReset();
                     state = state.AFFICHER;
@@ -169,20 +194,17 @@ public class StateMachine {
                 break;
             }
             case PRECEDENT: {
-                if (transformable.inModif(x,y)){
+                if (transformable.inModif(x, y)) {
                     //A5
                     transformable.highlightModifier();
                     state = state.MODIFIER;
-                }
-                else if (transformable.inPrec(x,y)){
+                } else if (transformable.inPrec(x, y)) {
                     state = state.PRECEDENT;
-                }
-                else if (transformable.inSuiv(x,y)){
+                } else if (transformable.inSuiv(x, y)) {
                     //A3
                     transformable.highlightSuivant();
                     state = state.SUIVANT;
-                }
-                else if (transformable.inAfficher(x,y)){
+                } else if (transformable.inAfficher(x, y)) {
                     //A8
                     transformable.setAllReset();
                     state = state.AFFICHER;
@@ -190,20 +212,17 @@ public class StateMachine {
                 break;
             }
             case SUPPRIMER: {
-                if (transformable.inModif(x,y)){
+                if (transformable.inModif(x, y)) {
                     //A5
                     transformable.highlightModifier();
                     state = state.MODIFIER;
-                }
-                else if (transformable.inSuiv(x,y)){
+                } else if (transformable.inSuiv(x, y)) {
                     //A3
                     transformable.highlightSuivant();
                     state = state.SUIVANT;
-                }
-                else if (transformable.inSuppr(x,y)){
+                } else if (transformable.inSuppr(x, y)) {
                     state = state.SUPPRIMER;
-                }
-                else if (transformable.inAfficher(x,y)){
+                } else if (transformable.inAfficher(x, y)) {
                     //A8
                     transformable.setAllReset();
                     state = state.AFFICHER;
@@ -211,7 +230,6 @@ public class StateMachine {
                 break;
             }
         }
-        System.out.println("state " + state.toString());
     }
-    
+
 }

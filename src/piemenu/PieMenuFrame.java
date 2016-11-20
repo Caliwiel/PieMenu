@@ -31,17 +31,6 @@ public class PieMenuFrame extends javax.swing.JFrame {
         piemenu_panel = new PieMenuPanel(getHeight(), getWidth(), x, y, 150);
         this.setContentPane(piemenu_panel);
         piemenu_panel.setVisible(false);
-        /*
-        this.setLocationRelativeTo(null);               
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
- /*
-        x = getWidth()/2;
-        y = getHeight()/2;
-        piemenu_panel = new PieMenuPanel(x, y); //Instanciation d'un objet JPanel
-        
-        PieMenuPanel pan = new PieMenuPanel();
-        this.setContentPane(pan);               
-        this.setVisible(true);*/
     }
 
     /**
@@ -78,12 +67,9 @@ public class PieMenuFrame extends javax.swing.JFrame {
         
         System.out.println("Click fenetre");
         if (evt.getButton() == MouseEvent.BUTTON3) {
-            /*x = getWidth()/2;
-        y = getHeight()/2;*/
             System.out.println("evt : " + evt.getX() + " " + evt.getY());
             x = evt.getX();
             y = evt.getY();
-            //this.setContentPane(new PieMenuPanel(x,y,150));
             piemenu_panel.setXpie(x);
             piemenu_panel.setYpie(y);
             
@@ -95,21 +81,6 @@ public class PieMenuFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formMouseClicked
 
-    /*public void paint(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-	g2.setColor(Color.yellow);
-	g2.fillArc((int)x-150, (int)y, 150, 150, 90, 90);
-	// Tracer un cercle
-	g2.setColor(Color.BLUE);
-	g2.fillArc((int)x-150, (int)y, 150, 150, 0, 90);	
-        g2.setColor(Color.GREEN);
-	g2.fillArc((int)x-150, (int)y, 150, 150, 180, 90);
-        g2.setColor(Color.yellow);
-	g2.fillArc((int)x-150, (int)y, 150, 150, 270, 90);
-        
-        g2.setColor(Color.white);
-        g2.fillOval((int)x-30, (int)y, 30, 30);
-    }*/
     /**
      * @param args the command line arguments
      */

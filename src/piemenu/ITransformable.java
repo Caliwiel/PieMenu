@@ -10,9 +10,7 @@ package piemenu;
  * @author bouzekel
  */
 public interface ITransformable {
-    
-    public void highlight(double x, double y);
-    
+        
     public boolean inModif(double x, double y);
     public boolean inPrec(double x, double y);
     public boolean inSuiv(double x, double y);
@@ -38,4 +36,13 @@ public interface ITransformable {
     public double getYevent();
     //A8
     public void setAllReset();
+    
+    //A9
+    public void selectSuivant();
+    //A10
+    public void selectPrecedent();
+    //A11
+    public void selectModifier();
+    //A12
+    public void selectSupprimer();
 }
