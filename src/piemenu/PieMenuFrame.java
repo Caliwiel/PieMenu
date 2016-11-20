@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -20,6 +21,7 @@ public class PieMenuFrame extends javax.swing.JFrame {
     
     double x, y;
     private PieMenuPanel piemenu_panel;
+    private int width_piemenu = 150;
 
     /**
      * Creates new form PieMenuFrame
@@ -28,7 +30,7 @@ public class PieMenuFrame extends javax.swing.JFrame {
         this.setTitle("Ma première fenêtre Java");
         this.setSize(500, 500);
         initComponents();
-        piemenu_panel = new PieMenuPanel(getHeight(), getWidth(), x, y, 150);
+        piemenu_panel = new PieMenuPanel(getHeight(), getWidth(), x, y, width_piemenu);
         this.setContentPane(piemenu_panel);
         piemenu_panel.setVisible(false);
     }
@@ -65,17 +67,20 @@ public class PieMenuFrame extends javax.swing.JFrame {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         
-        System.out.println("Click fenetre");
         if (evt.getButton() == MouseEvent.BUTTON3) {
-            System.out.println("evt : " + evt.getX() + " " + evt.getY());
             x = evt.getX();
             y = evt.getY();
             piemenu_panel.setXpie(x);
             piemenu_panel.setYpie(y);
             
-            this.setVisible(true);
-            piemenu_panel.setVisible(true);
-            piemenu_panel.getStatemachine().handleClickRight();
+            if (x-width_piemenu/2 < 0 || x+width_piemenu/2 > getWidth() || y-width_piemenu/2 < 0 || y+width_piemenu/2 > getHeight()){
+                JOptionPane.showMessageDialog(null, "Il n'y a pas la place de tracer le pie menu autour du click, retentez ;)");
+            }
+            else {
+                this.setVisible(true);
+                piemenu_panel.setVisible(true);
+                piemenu_panel.getStatemachine().handleClickRight();
+            }
         } else {
             piemenu_panel.setVisible(false);
         }

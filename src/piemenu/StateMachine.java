@@ -131,7 +131,6 @@ public class StateMachine {
     }
 
     public void handleMove(double x, double y) {
-        System.out.println("handle move  :" + x + "  " + y);
         switch (state) {
             case INIT: {
                 //interdit

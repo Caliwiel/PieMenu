@@ -22,12 +22,28 @@ import java.awt.event.MouseEvent;
 public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     private final static int DIAMETRE_CENTRE = 15;
+    
+    private final static Color COLOR1 = new Color(203, 219, 244);
+    private final static Color COLOR2 = new Color(199, 204, 214);
+    private final static Color COLOR3 = new Color(199, 204, 214);
+    private final static Color COLOR4 = new Color(203, 219, 244);
+    
+    private final static int START_ANGLE1 = 90;
+    private final static int END_ANGLE1 = 90;
+    private final static int START_ANGLE2 = 0;
+    private final static int END_ANGLE2 = 90;
+    private final static int START_ANGLE3 = 180;
+    private final static int END_ANGLE3 = 90;
+    private final static int START_ANGLE4 = 270;
+    private final static int END_ANGLE4 = 90;
+    
+    
     int withPie;
     int xDep, yDep;
     private double posClickX;
     private double posClickY;
     private Color string_color = new Color(121, 134, 155);
-    private Color string_color_selected = new Color(112, 244, 229);
+    private Color string_color_selected = new Color(220, 220, 220);
     private StateMachine statemachine;
 
     /**
@@ -55,21 +71,24 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
         if (dx <= DIAMETRE_CENTRE && dy <= DIAMETRE_CENTRE && dx >= 0 && dy >= 0) {
             //dans cercle
             buttuns = Buttuns.AUCUN;
-        } else if (x > posClickX) {
-            if (y > posClickY) { // x > posX et y > posY
+        }
+        else if (dx > withPie/2 || dy+20 > withPie/2 || dx < 0 || dy < 0){ //hors du pie            
+            buttuns = Buttuns.AUCUN;
+        }
+        else if (x >= posClickX) {
+            if (y >= posClickY) { // x > posX et y > posY
                 buttuns = Buttuns.MODIFIER;
             } else { //x > posX et y < posY
                 buttuns = Buttuns.PRECEDENT;
             }
         } else {
-            if (y > posClickY) { //x < posx et y > posY
+            if (y >= posClickY) { //x < posx et y > posY
                 buttuns = Buttuns.SUPPRIMER;
             } else { //x et y < posx et posy
                 buttuns = Buttuns.SUIVANT;
 
             }
         }
-        System.out.println(buttuns.toString());
         return buttuns;
     }
 
@@ -134,7 +153,6 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void onMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMouseMoved
-        //System.out.println("evt: "  + evt.getX() + " " + evt.getY());
         this.statemachine.handleMove(evt.getX(), evt.getY());
     }//GEN-LAST:event_onMouseMoved
 
@@ -156,14 +174,14 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         // Tracer les arcs de cercle 
-        g2.setColor(new Color(203, 219, 244));
-        g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
-        g2.setColor(new Color(199, 204, 214));
-        g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);
-        g2.setColor(new Color(199, 204, 214));
-        g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
-        g2.setColor(new Color(203, 219, 244));
-        g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
+        g2.setColor(COLOR1);
+        g2.fillArc(xDep, yDep, withPie, withPie, START_ANGLE1, END_ANGLE1);
+        g2.setColor(COLOR2);
+        g2.fillArc(xDep, yDep, withPie, withPie, START_ANGLE2, END_ANGLE2);
+        g2.setColor(COLOR3);
+        g2.fillArc(xDep, yDep, withPie, withPie, START_ANGLE3, END_ANGLE3);
+        g2.setColor(COLOR4);
+        g2.fillArc(xDep, yDep, withPie, withPie, START_ANGLE4, END_ANGLE4);
         drawCircle(g2);
         // Dessiner Labels
         g2.setColor(Color.GRAY);
@@ -179,9 +197,9 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
     }
 
     private void highlightQuartier(Graphics2D g2, int startAngle, int arcAngle) {
+        paint(g2);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        paint(g2);
         g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
         g2.fillArc(xDep, yDep, withPie, withPie, startAngle, arcAngle);
     }
@@ -194,7 +212,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
     @Override
     public void highlightSuivant() {
         Graphics2D g2 = (Graphics2D) getGraphics();
-        highlightQuartier(g2, 90, 90);
+        highlightQuartier(g2, START_ANGLE1, END_ANGLE1);
         setColorStringQuartier(g2, string_color, "Suivant", xDep + 20, yDep + 50);
         drawCircle(g2);
     }
@@ -202,24 +220,24 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
     @Override
     public void highlightPrecedent() {
         Graphics2D g2 = (Graphics2D) getGraphics();
-        highlightQuartier(g2, 0, 90);
-        setColorStringQuartier(g2, string_color, "Precedent", xDep + 5 + withPie / 2, yDep + 50);
-        drawCircle(g2);
-    }
-
-    @Override
-    public void highlightModifier() {
-        Graphics2D g2 = (Graphics2D) getGraphics();
-        highlightQuartier(g2, 270, 90);
-        setColorStringQuartier(g2, string_color, "Modifier", xDep + 10 + withPie / 2, yDep + 40 + withPie / 2);
+        highlightQuartier(g2, START_ANGLE2, END_ANGLE2);
+        setColorStringQuartier(g2, string_color, "Précedent", xDep + 5 + withPie / 2, yDep + 50);
         drawCircle(g2);
     }
 
     @Override
     public void highlightSupprimer() {
         Graphics2D g2 = (Graphics2D) getGraphics();
-        highlightQuartier(g2, 180, 90);
+        highlightQuartier(g2, START_ANGLE3, END_ANGLE4);
         setColorStringQuartier(g2, string_color, "Supprimer", xDep + 15, yDep + 40 + withPie / 2);
+        drawCircle(g2);
+    }
+    
+    @Override
+    public void highlightModifier() {
+        Graphics2D g2 = (Graphics2D) getGraphics();
+        highlightQuartier(g2, START_ANGLE4, END_ANGLE4);
+        setColorStringQuartier(g2, string_color, "Modifier", xDep + 10 + withPie / 2, yDep + 40 + withPie / 2);
         drawCircle(g2);
     }
 
@@ -235,9 +253,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     @Override
     public boolean inSuiv(double x, double y) {
-        //System.out.println(getButtun(posClickX, posClickY).toString());
         return getButtun(x, y) == Buttuns.SUIVANT;
-        //return true;
     }
 
     @Override
@@ -284,7 +300,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
     @Override
     public void selectPrecedent() {
         Graphics2D g2 = (Graphics2D) getGraphics();
-        setColorStringQuartier(g2, string_color_selected, "Precedent", xDep + 5 + withPie / 2, yDep + 50);
+        setColorStringQuartier(g2, string_color_selected, "Précedent", xDep + 5 + withPie / 2, yDep + 50);
 
     }
 
