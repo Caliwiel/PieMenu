@@ -96,29 +96,30 @@ public class StateMachine {
     }
     
     
-    public void handleMove() {
+    public void handleMove(double x, double y) {
+        System.out.println("handle move  :" + x  + "  "  + y);
         switch (state) {
             case INIT: {
                 //interdit
                 break;
             }
             case AFFICHER: {
-                if (transformable.inSuiv()){
+                if (transformable.inSuiv(x,y)){
                     //A3
                     transformable.highlightSuivant();
                     state = state.SUIVANT;
                 }
-                else if (transformable.inPrec()){
+                else if (transformable.inPrec(x,y)){
                     //A4
                     transformable.highlightPrecedent();
                     state = state.PRECEDENT;
                 }
-                else if (transformable.inModif()){
+                else if (transformable.inModif(x,y)){
                     //A5
                     transformable.highlightModifier();
                     state = state.MODIFIER;
                 }
-                else if (transformable.inSuppr()){
+                else if (transformable.inSuppr(x,y)){
                     //A6
                     transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
@@ -126,20 +127,20 @@ public class StateMachine {
                 break;
             }
             case SUIVANT: {
-                if (transformable.inSuiv()){
+                if (transformable.inSuiv(x,y)){
                     state = state.SUIVANT;
                 }
-                else if (transformable.inPrec()){
+                else if (transformable.inPrec(x,y)){
                     //A4
                     transformable.highlightPrecedent();
                     state = state.PRECEDENT;
                 }
-                else if (transformable.inSuppr()){
+                else if (transformable.inSuppr(x,y)){
                     //A6
                     transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
                 }
-                else if (transformable.inAfficher()){
+                else if (transformable.inAfficher(x,y)){
                     //A8
                     transformable.setAllReset();
                     state = state.AFFICHER;
@@ -147,20 +148,20 @@ public class StateMachine {
                 break;
             }
             case MODIFIER: {
-                if (transformable.inModif()){
+                if (transformable.inModif(x,y)){
                     state = state.MODIFIER;
                 }
-                else if (transformable.inPrec()){
+                else if (transformable.inPrec(x,y)){
                     //A4
                     transformable.highlightPrecedent();
                     state = state.PRECEDENT;
                 }
-                else if (transformable.inSuppr()){
+                else if (transformable.inSuppr(x,y)){
                     //A6
                     transformable.highlightSupprimer();
                     state = state.SUPPRIMER;
                 }
-                else if (transformable.inAfficher()){
+                else if (transformable.inAfficher(x,y)){
                     //A8
                     transformable.setAllReset();
                     state = state.AFFICHER;
@@ -168,20 +169,20 @@ public class StateMachine {
                 break;
             }
             case PRECEDENT: {
-                if (transformable.inModif()){
+                if (transformable.inModif(x,y)){
                     //A5
                     transformable.highlightModifier();
                     state = state.MODIFIER;
                 }
-                else if (transformable.inPrec()){
+                else if (transformable.inPrec(x,y)){
                     state = state.PRECEDENT;
                 }
-                else if (transformable.inSuiv()){
+                else if (transformable.inSuiv(x,y)){
                     //A3
                     transformable.highlightSuivant();
                     state = state.SUIVANT;
                 }
-                else if (transformable.inAfficher()){
+                else if (transformable.inAfficher(x,y)){
                     //A8
                     transformable.setAllReset();
                     state = state.AFFICHER;
@@ -189,20 +190,20 @@ public class StateMachine {
                 break;
             }
             case SUPPRIMER: {
-                if (transformable.inModif()){
+                if (transformable.inModif(x,y)){
                     //A5
                     transformable.highlightModifier();
                     state = state.MODIFIER;
                 }
-                else if (transformable.inSuiv()){
+                else if (transformable.inSuiv(x,y)){
                     //A3
                     transformable.highlightSuivant();
                     state = state.SUIVANT;
                 }
-                else if (transformable.inSuppr()){
+                else if (transformable.inSuppr(x,y)){
                     state = state.SUPPRIMER;
                 }
-                else if (transformable.inAfficher()){
+                else if (transformable.inAfficher(x,y)){
                     //A8
                     transformable.setAllReset();
                     state = state.AFFICHER;
@@ -210,6 +211,7 @@ public class StateMachine {
                 break;
             }
         }
+        System.out.println("state " + state.toString());
     }
     
 }

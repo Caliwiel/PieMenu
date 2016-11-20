@@ -13,11 +13,11 @@ public interface ITransformable {
     
     public void highlight(double x, double y);
     
-    public boolean inModif();
-    public boolean inPrec();
-    public boolean inSuiv();
-    public boolean inSuppr();
-    public boolean inAfficher();
+    public boolean inModif(double x, double y);
+    public boolean inPrec(double x, double y);
+    public boolean inSuiv(double x, double y);
+    public boolean inSuppr(double x, double y);
+    public boolean inAfficher(double x, double y);
     
     
     //A1

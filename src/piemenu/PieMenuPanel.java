@@ -21,11 +21,11 @@ import java.awt.event.MouseEvent;
  */
 public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
-    private final static int DIAMETRE_CENTRE = 15;
-    double x, y;
+    private final static int DIAMETRE_CENTRE = 10;
+    //double x, y;
     int withPie;
     int xDep, yDep;
-    private double posClicX;
+    private double posClickX;
     private double posClickY;
     private StateMachine statemachine;
 
@@ -40,8 +40,8 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
         initComponents();
         this.setPreferredSize(new Dimension(w, h));
         init();
-        this.x = x;
-        this.y = y;
+        //this.x = x;
+        //this.y = y;
         this.withPie = width;
     }
 
@@ -51,22 +51,38 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     private Buttuns getButtun(double x, double y) {
         Buttuns buttuns;
-        if (((x < posClicX + DIAMETRE_CENTRE) && (y < posClickY + DIAMETRE_CENTRE)) || ((x < posClicX + DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE)) || ((x < posClicX - DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE)) || ((x < posClicX - DIAMETRE_CENTRE) && (y < posClickY + DIAMETRE_CENTRE))) {
+        System.out.println("x : " + x + " y : "+ y);
+        System.out.println("posClickX " + posClickX + " posClickY " + posClickY);
+        System.out.println("Diametre " + DIAMETRE_CENTRE);
+       /*
+        if (((x < posClickX + DIAMETRE_CENTRE/2) && (y < posClickY + DIAMETRE_CENTRE/2)) || 
+                ((x < posClickX + DIAMETRE_CENTRE) && (y < posClickY - DIAMETRE_CENTRE/2)) || 
+                ((x < posClickX - DIAMETRE_CENTRE/2) && (y < posClickY - DIAMETRE_CENTRE/2)) || 
+                ((x < posClickX - DIAMETRE_CENTRE/2) && (y < posClickY + DIAMETRE_CENTRE/2))) {
+                 */
+        double dx = Math.abs(x-posClickX);
+        double dy = Math.abs(y-posClickY);
+        if ( dx <= DIAMETRE_CENTRE && dy <= DIAMETRE_CENTRE && dx >= 0 && dy >= 0 ){
             //dans cercle
+            System.out.println("centre");
             buttuns = Buttuns.AUCUN;
-        } else if ((posClicX > x + withPie / 2 || posClicX < x - withPie / 2) && (posClickY > y + withPie / 2 || posClickY < y - withPie / 2)) {
+        } /*else if ((posClickX > x + withPie / 2 || posClickX < x - withPie / 2) && (posClickY > y + withPie / 2 || posClickY < y - withPie / 2)) {
             //hors pie menu
+            System.out.println("hors pie");
             buttuns = Buttuns.AUCUN;
-        } else if (x > posClicX) {
-            if (y > posClickY) {
-                buttuns = Buttuns.PRECEDENT;
-            } else {
+        }*/ else if (x > posClickX) {
+            if (y > posClickY) { // x > posX et y > posY
                 buttuns = Buttuns.MODIFIER;
+            } else { //x > posX et y < posY
+                buttuns = Buttuns.PRECEDENT;
             }
-        } else if (y > posClickY) {
-            buttuns = Buttuns.SUIVANT;
-        } else {
-            buttuns = Buttuns.SUPPRIMER;
+        } else 
+        {
+            if (y > posClickY) { //x < posx et y > posY
+                buttuns = Buttuns.SUIVANT;
+            } else { //x et y < posx et posy
+                buttuns = Buttuns.SUPPRIMER;
+            }
         }
         return buttuns;
     }
@@ -77,7 +93,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     public void setXpie(double x) {
         this.xDep = (int) (x - withPie / 2);
-        this.posClicX = x;
+        this.posClickX = x;
         repaint();
     }
 
@@ -87,7 +103,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     public void setYpie(double y) {
         this.yDep = (int) (y - withPie / 2) - 30;
-        this.posClickY = y;
+        this.posClickY = y-30;
         repaint();
     }
 
@@ -132,7 +148,8 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void onMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMouseMoved
-        this.statemachine.handleMove();
+        System.out.println("evt: "  + evt.getX() + " " + evt.getY());
+        this.statemachine.handleMove(evt.getX(), evt.getY());
     }//GEN-LAST:event_onMouseMoved
 
     private void onMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onMousePressed
@@ -145,28 +162,6 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     }//GEN-LAST:event_onMouseReleased
 
-    @Override
-    public void paintComponent(Graphics g) {
-        /*    super.paintComponent(g);
-        
-        Graphics2D g2 = (Graphics2D)g;
-	g2.setColor(Color.LIGHT_GRAY);
-	
-	g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
-	// Tracer un cercle        
-	g2.setColor(Color.BLUE);
-	g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);	
-        g2.setColor(Color.GREEN);
-	g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
-        g2.setColor(Color.yellow);
-	g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
-        
-        g2.setColor(Color.white);
-        g2.fillOval(xDep+withPie/2-15, yDep+withPie/2-DIAMETRE_CENTRE, DIAMETRE_CENTRE*2, DIAMETRE_CENTRE*2);
-        
-        System.out.println("Paint component 2"); */
-        //this.setVisible(true);
-    }
 
     @Override
     public void paint(Graphics g) {
@@ -200,7 +195,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        //paint(g2);
+        paint(g2);
         g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
         g2.fillArc(xDep, yDep, withPie, withPie, 90, 90);
         g2.setColor(new Color(121, 134, 155));
@@ -213,7 +208,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        //paint(g2);
+        paint(g2);
         g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
         g2.fillArc(xDep, yDep, withPie, withPie, 0, 90);
         g2.setColor(new Color(121, 134, 155));
@@ -226,9 +221,9 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        //paint(g2);
+        paint(g2);
         g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
-        g2.fillArc(xDep, yDep, withPie, withPie, 180, 90);
+        g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
         g2.setColor(new Color(121, 134, 155));
         g2.drawString("Modifier", xDep + 10 + withPie / 2, yDep + 40 + withPie / 2);
         drawCircle(g2);
@@ -239,7 +234,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
         Graphics2D g2 = (Graphics2D) getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        //paint(g2);
+        paint(g2);
         g2.setPaint(new GradientPaint(5, 7, Color.WHITE, 400, 7, new Color(187, 210, 247)));
         g2.fillArc(xDep, yDep, withPie, withPie, 270, 90);
         g2.setColor(new Color(121, 134, 155));
@@ -277,30 +272,30 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
     }
 
     @Override
-    public boolean inModif() {
-        return getButtun(posClicX, posClickY) == Buttuns.MODIFIER;
+    public boolean inModif(double x, double y) {
+        return getButtun(x, y) == Buttuns.MODIFIER;
     }
 
     @Override
-    public boolean inPrec() {
-        return getButtun(posClicX, posClickY) == Buttuns.PRECEDENT;
+    public boolean inPrec(double x, double y) {
+        return getButtun(x, y) == Buttuns.PRECEDENT;
     }
 
     @Override
-    public boolean inSuiv() {
-        System.out.println(getButtun(posClicX, posClickY).toString());
-        //return getButtun(posClicX, posClickY) == Buttuns.SUIVANT;
-        return true;
+    public boolean inSuiv(double x, double y) {
+        //System.out.println(getButtun(posClickX, posClickY).toString());
+        return getButtun(x, y) == Buttuns.SUIVANT;
+        //return true;
     }
 
     @Override
-    public boolean inSuppr() {
-        return getButtun(posClicX, posClickY) == Buttuns.SUPPRIMER;
+    public boolean inSuppr(double x, double y) {
+        return getButtun(x, y) == Buttuns.SUPPRIMER;
     }
 
     @Override
-    public boolean inAfficher() {
-        return getButtun(posClicX, posClickY) == Buttuns.AUCUN;
+    public boolean inAfficher(double x, double y) {
+        return getButtun(x, y) == Buttuns.AUCUN;
     }
 
     @Override
@@ -315,7 +310,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     @Override
     public double getXevent() {
-        return posClicX;
+        return posClickX;
     }
 
     @Override
