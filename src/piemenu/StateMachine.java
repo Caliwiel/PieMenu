@@ -63,6 +63,18 @@ public class StateMachine {
                 state = state.INIT;
                 break;
             }
+            case SELECTMODIFIER : {
+                break;
+            }
+            case SELECTPRECEDENT : {
+                break;
+            }
+            case SELECTSUIVANT : {
+                break;
+            }
+            case SELECTSUPPRIMER : {
+                break;
+            }
         }
     }
 
@@ -91,6 +103,18 @@ public class StateMachine {
             }
             case SUPPRIMER: {
                 state = state.SUPPRIMER;
+                break;
+            }
+             case SELECTMODIFIER : {
+                break;
+            }
+            case SELECTPRECEDENT : {
+                break;
+            }
+            case SELECTSUIVANT : {
+                break;
+            }
+            case SELECTSUPPRIMER : {
                 break;
             }
         }
@@ -127,13 +151,25 @@ public class StateMachine {
                 state = state.SUPPRIMER;
                 break;
             }
+             case SELECTMODIFIER : {
+                break;
+            }
+            case SELECTPRECEDENT : {
+                break;
+            }
+            case SELECTSUIVANT : {
+                break;
+            }
+            case SELECTSUPPRIMER : {
+                break;
+            }
         }
     }
 
     public void handleMove(double x, double y) {
         switch (state) {
             case INIT: {
-                //interdit
+                state = state.INIT;
                 break;
             }
             case AFFICHER: {
@@ -226,6 +262,18 @@ public class StateMachine {
                     transformable.setAllReset();
                     state = state.AFFICHER;
                 }
+                break;
+            }
+             case SELECTMODIFIER : {
+                break;
+            }
+            case SELECTPRECEDENT : {
+                break;
+            }
+            case SELECTSUIVANT : {
+                break;
+            }
+            case SELECTSUPPRIMER : {
                 break;
             }
         }
