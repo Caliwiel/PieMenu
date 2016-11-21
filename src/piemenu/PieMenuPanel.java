@@ -8,6 +8,7 @@ package piemenu;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -43,7 +44,7 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
     private double posClickX;
     private double posClickY;
     private Color string_color = new Color(121, 134, 155);
-    private Color string_color_selected = new Color(220, 220, 220);
+    private Color string_color_selected = new Color(187, 227, 247);
     private StateMachine statemachine;
 
     /**
@@ -206,7 +207,8 @@ public class PieMenuPanel extends javax.swing.JPanel implements ITransformable {
 
     private void setColorStringQuartier(Graphics2D g2, Color color, String string, int x, int y) {
         g2.setColor(color);
-        g2.drawString(string, x, y);
+        g2.setFont(new Font("default", Font.BOLD, 14));
+        g2.drawString(string, x-5, y);
     }
 
     @Override
