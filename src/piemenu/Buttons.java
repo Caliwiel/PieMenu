@@ -7,9 +7,10 @@ package piemenu;
 
 /**
  *
- * @author bouzekel
+ * @author bouzekel on 21/11/2016.
+ * Les boutons du pie menu.
  */
-public enum Buttuns {
+public enum Buttons {
     SUIVANT,
     PRECEDENT,
     SUPPRIMER,

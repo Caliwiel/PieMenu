@@ -7,7 +7,8 @@ package piemenu;
 
 /**
  *
- * @author bouzekel
+ * @author bouzekel on 21/11/2016.
+ * Interface transformable décrit le comportement d'un composant pouvant être transformé.
  */
 public interface ITransformable {
         
@@ -16,7 +17,7 @@ public interface ITransformable {
     public boolean inSuiv(double x, double y);
     public boolean inSuppr(double x, double y);
     public boolean inAfficher(double x, double y);
-    
+    public boolean inLimits(double x, double y);
     
     //A1
     public void afficherPie();
@@ -45,4 +46,6 @@ public interface ITransformable {
     public void selectModifier();
     //A12
     public void selectSupprimer();
+    //A13
+    public void changeInLimits();
 }

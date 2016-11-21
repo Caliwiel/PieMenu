@@ -15,22 +15,23 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author bouzekel
+ * @author bouzekel on 21/11/2016.
+ * Fenêtre principale.
  */
-public class PieMenuFrame extends javax.swing.JFrame {
+public class Frame extends javax.swing.JFrame {
     
     double x, y;
-    private PieMenuPanel piemenu_panel;
+    private PieMenu piemenu_panel;
     private int width_piemenu = 150;
 
     /**
      * Creates new form PieMenuFrame
      */
-    public PieMenuFrame() {
+    public Frame() {
         this.setTitle("Ma première fenêtre Java");
         this.setSize(500, 500);
         initComponents();
-        piemenu_panel = new PieMenuPanel(getHeight(), getWidth(), x, y, width_piemenu);
+        piemenu_panel = new PieMenu(getHeight(), getWidth(), x, y, width_piemenu);
         this.setContentPane(piemenu_panel);
         piemenu_panel.setVisible(false);
     }
@@ -72,54 +73,20 @@ public class PieMenuFrame extends javax.swing.JFrame {
             y = evt.getY();
             piemenu_panel.setXpie(x);
             piemenu_panel.setYpie(y);
-            
+            /*
             if (x-width_piemenu/2 < 0 || x+width_piemenu/2 > getWidth() || y-width_piemenu/2 < 0 || y+width_piemenu/2 > getHeight()){
                 JOptionPane.showMessageDialog(null, "Il n'y a pas la place de tracer le pie menu autour du click, retentez ;)");
             }
-            else {
+            else {*/
                 this.setVisible(true);
                 piemenu_panel.setVisible(true);
-                piemenu_panel.getStatemachine().handleClickRight();
-            }
+                piemenu_panel.getStatemachine().cClickRight(evt.getX(), evt.getY());
+            //}
         } else {
             piemenu_panel.setVisible(false);
         }
     }//GEN-LAST:event_formMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PieMenuFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PieMenuFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PieMenuFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PieMenuFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PieMenuFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

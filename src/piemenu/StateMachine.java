@@ -7,7 +7,8 @@ package piemenu;
 
 /**
  *
- * @author bouzekel
+ * @author bouzekel on 21/11/2016.
+ * Machine à états du Pie Menu décrit dans le document fourni.
  */
 public class StateMachine {
 
@@ -27,7 +28,7 @@ public class StateMachine {
         this.state = state;
     }
 
-    public void handleClickLeft() {
+    public void cPressedLeft() {
         switch (state) {
             case INIT: {
                 //interdit
@@ -40,133 +41,116 @@ public class StateMachine {
                 break;
             }
             case SUIVANT: {
-                //A2
-                transformable.enleverPie();
-                state = state.INIT;
-                break;
-            }
-            case MODIFIER: {
-                //A2
-                transformable.enleverPie();
-                state = state.INIT;
-                break;
-            }
-            case PRECEDENT: {
-                //A2
-                transformable.enleverPie();
-                state = state.INIT;
-                break;
-            }
-            case SUPPRIMER: {
-                //A2
-                transformable.enleverPie();
-                state = state.INIT;
-                break;
-            }
-            case SELECTMODIFIER : {
-                break;
-            }
-            case SELECTPRECEDENT : {
-                break;
-            }
-            case SELECTSUIVANT : {
-                break;
-            }
-            case SELECTSUPPRIMER : {
-                break;
-            }
-        }
-    }
-
-    public void handleClickRight() {
-        switch (state) {
-            case INIT: {
-                //A1
-                state = state.AFFICHER;
-                break;
-            }
-            case AFFICHER: {
-                state = state.AFFICHER;
-                break;
-            }
-            case SUIVANT: {
-                state = state.SUIVANT;
-                break;
-            }
-            case MODIFIER: {
-                state = state.MODIFIER;
-                break;
-            }
-            case PRECEDENT: {
-                state = state.PRECEDENT;
-                break;
-            }
-            case SUPPRIMER: {
-                state = state.SUPPRIMER;
-                break;
-            }
-             case SELECTMODIFIER : {
-                break;
-            }
-            case SELECTPRECEDENT : {
-                break;
-            }
-            case SELECTSUIVANT : {
-                break;
-            }
-            case SELECTSUPPRIMER : {
-                break;
-            }
-        }
-    }
-
-    public void handlePressed() {
-        switch (state) {
-            case INIT: {
-                //interdit
-                break;
-            }
-            case AFFICHER: {
-                transformable.setAllReset();
-                state = state.AFFICHER;
-                break;
-            }
-            case SUIVANT: {
+                //A3
+                transformable.highlightSuivant();
+                //A9
                 transformable.selectSuivant();
-                state = state.SUIVANT;
+                state = state.SELECTSUIVANT;
                 break;
             }
             case MODIFIER: {
+                //A5
+                transformable.highlightModifier();
+                //A11
                 transformable.selectModifier();
-                state = state.MODIFIER;
+                state = state.SELECTMODIFIER;
                 break;
             }
             case PRECEDENT: {
+                //A4
+                transformable.highlightPrecedent();
+                //A10
                 transformable.selectPrecedent();
-                state = state.PRECEDENT;
+                state = state.SELECTPRECEDENT;
                 break;
             }
             case SUPPRIMER: {
+                //A6
+                transformable.highlightSupprimer();
+                //A12
                 transformable.selectSupprimer();
-                state = state.SUPPRIMER;
+                state = state.SELECTSUPPRIMER;
                 break;
             }
-             case SELECTMODIFIER : {
+            case SELECTMODIFIER: {
+                //interdit
                 break;
             }
-            case SELECTPRECEDENT : {
+            case SELECTPRECEDENT: {
+                //interdit
                 break;
             }
-            case SELECTSUIVANT : {
+            case SELECTSUIVANT: {
+                //interdit
                 break;
             }
-            case SELECTSUPPRIMER : {
+            case SELECTSUPPRIMER: {
+                //interdit
                 break;
             }
         }
     }
 
-    public void handleMove(double x, double y) {
+    public void cClickRight(double x, double y) {
+        switch (state) {
+            case INIT: {
+                if (transformable.inLimits(x, y)) {
+                    //A1
+                    transformable.afficherPie();
+                    state = state.AFFICHER;
+                } else {
+                    //A13
+                    transformable.changeInLimits();
+                    //A1
+                    transformable.afficherPie();
+                    state=state.AFFICHER;
+                }
+                break;
+            }
+            case AFFICHER: {
+                //A2
+                transformable.enleverPie();
+                //A1
+                transformable.afficherPie();
+                state = state.AFFICHER;
+                break;
+            }
+            case SUIVANT: {
+                state = state.SUIVANT;
+                break;
+            }
+            case MODIFIER: {
+                state = state.MODIFIER;
+                break;
+            }
+            case PRECEDENT: {
+                state = state.PRECEDENT;
+                break;
+            }
+            case SUPPRIMER: {
+                state = state.SUPPRIMER;
+                break;
+            }
+            case SELECTMODIFIER: {
+                //interdit
+                break;
+            }
+            case SELECTPRECEDENT: {
+                //interdit
+                break;
+            }
+            case SELECTSUIVANT: {
+                //interdit
+                break;
+            }
+            case SELECTSUPPRIMER: {
+                //interdit
+                break;
+            }
+        }
+    }
+    
+    public void cMove(double x, double y) {
         switch (state) {
             case INIT: {
                 state = state.INIT;
@@ -264,19 +248,75 @@ public class StateMachine {
                 }
                 break;
             }
-             case SELECTMODIFIER : {
+            case SELECTMODIFIER: {
+                state = state.SELECTMODIFIER;
                 break;
             }
-            case SELECTPRECEDENT : {
+            case SELECTPRECEDENT: {
+                state = state.SELECTPRECEDENT;
                 break;
             }
-            case SELECTSUIVANT : {
+            case SELECTSUIVANT: {
+                state = state.SELECTSUIVANT;
                 break;
             }
-            case SELECTSUPPRIMER : {
+            case SELECTSUPPRIMER: {
+                state = state.SELECTSUPPRIMER;
                 break;
             }
         }
     }
 
+    public void cReleased() {
+        switch (state) {
+            case INIT: {
+                //interdit
+                break;
+            }
+            case AFFICHER: {
+                //interdit
+                break;
+            }
+            case SUIVANT: {
+                //interdit
+                break;
+            }
+            case MODIFIER: {
+                //interdit
+                break;
+            }
+            case PRECEDENT: {
+                //interdit
+                break;
+            }
+            case SUPPRIMER: {
+                //interdit
+                break;
+            }
+            case SELECTMODIFIER: {
+                //A2
+                transformable.enleverPie();
+                state=state.INIT;
+                break;
+            }
+            case SELECTPRECEDENT: {
+                //A2
+                transformable.enleverPie();
+                state=state.INIT;
+                break;
+            }
+            case SELECTSUIVANT: {
+                //A2
+                transformable.enleverPie();
+                state=state.INIT;
+                break;
+            }
+            case SELECTSUPPRIMER: {
+                //A2
+                transformable.enleverPie();
+                state=state.INIT;
+                break;
+            }
+        }
+    }
 }

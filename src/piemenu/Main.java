@@ -8,18 +8,16 @@ package piemenu;
 /**
  *
  * @author bouzekel on 21/11/2016.
- * Etats de la machine à états.
+ * Main lance l'application.
  */
-public enum States {
-    INIT,
-    SUIVANT,
-    PRECEDENT,
-    SUPPRIMER,
-    MODIFIER,
-    AFFICHER,
-    SELECTSUIVANT,
-    SELECTPRECEDENT,
-    SELECTSUPPRIMER,
-    SELECTMODIFIER
+public class Main {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Frame frame = new Frame();
+        frame.setVisible(true);
+    }
     
 }
